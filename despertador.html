@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Despertador</title>
+</head>
+<body>
+  <h1>Despertador</h1>
+  <label for="alarmTime">Escolha a hora do alarme:</label>
+  <input type="datetime-local" id="alarmTime">
+  <button id="setAlarmButton">Definir Alarme</button>
+  <button id="stopAlarmButton">Parar Alarme</button>
+  
+  <audio id="alarmSound" src="caminho/do/seu/arquivo/de/audio.mp3" preload="auto"></audio>
+
+  <script>
+    let alarmTimeout;
+    
+    function setAlarm() {
+      const alarmTimeInput = document.getElementById('alarmTime');
+      const alarmTime = new Date(alarmTimeInput.value);
+      
+      const currentTime = new Date();
+      
+      const timeToAlarm = alarmTime - currentTime;
+      
+      if (timeToAlarm > 0) {
+        alarmTimeout = setTimeout(() => {
+          playAlarmSound();
+          alert('Alarme! Hora de acordar!');
+        }, timeToAlarm);
+      } else {
+        alert('Hora inválida. Escolha uma hora no futuro.');
+      }
+    }
+
+    function playAlarmSound() {
+      const alarmSound = document.getElementById('alarmSound');
+      alarmSound.play();
+    }
+
+    function stopAlarm() {
+      const alarmSound = document.getElementById('alarmSound');
+      alarmSound.pause();
+      clearTimeout(alarmTimeout);
+    }
+
+    const setAlarmButton = document.getElementById('setAlarmButton');
+    setAlarmButton.addEventListener('click', setAlarm);
+
+    const stopAlarmButton = document.getElementById('stopAlarmButton');
+    stopAlarmButton.addEventListener('click', stopAlarm);
+  </script>
+</body>
+</html>
+
